@@ -1,0 +1,72 @@
+﻿<Window x:Class="Task_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task_1"
+        mc:Ignorable="d"
+        Title="Задание 1" Height="450" Width="800" Loaded="Window_Loaded">
+
+    <Window.DataContext>
+        <local:AppViewModel/>
+    </Window.DataContext> 
+    
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5 0 5 0"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="Lavender" Margin="5">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.75*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="0.25*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Center" Background="Black"/>
+
+        <ListView x:Name="clientListView" Grid.Column="0" ItemsSource="{Binding ClientsList}"  SelectedItem="{Binding SelectedClient}" SelectedIndex="1"
+                  FontSize="14">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Patronymic}"/>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding NumberPhone}"/>
+                    <GridViewColumn Header="Паспорт" DisplayMemberBinding="{Binding Passport}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <DockPanel Grid.Column="2">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock Text="Пользователь: "/>
+                <TextBlock x:Name="userTextBlock" Text="{Binding Consultant.Name}"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock Text="Клиент"/>
+                <TextBlock Text="Фамилия"/>
+                <TextBox x:Name="lastNameTextBox" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Имя"/>
+                <TextBox x:Name="firstNamTextBox" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Отчество"/>
+                <TextBox x:Name="patronymicTextBox" Text="{Binding Patronymic, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Телефон"/>
+                <TextBox x:Name="numberPhoneTextBox" Text="{Binding NumberPhone, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Паспорт"/>
+                <TextBox x:Name="passportTextBox" Text="{Binding VisiblePassport, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Margin="10">
+                <TextBox Text="{Binding VisiblePassport, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+            </StackPanel>
+            <Button x:Name="btnEdit" Width="100" Height="30" VerticalAlignment="Top" Margin="5 10 5 5" HorizontalAlignment="Right">Редактировать</Button>
+            
+        </DockPanel>
+
+    </Grid>
+</Window>
